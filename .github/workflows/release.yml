@@ -32,20 +32,20 @@ jobs:
       - name: Build patch bundle
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew :patches:buildAndroid generatePatchesList clean --no-daemon
+        run: ./gradlew clean :patches:buildAndroid generatePatchesList --no-daemon
 
       - name: Compute release metadata
         id: meta
         shell: bash
         run: |
           VERSION="$(grep '^version *= *' gradle.properties | head -n1 | cut -d= -f2 | tr -d '[:space:]')"
-          SHORT_SHA="${GITHUB_SHA::7}"
-          TAG="v${VERSION}-${SHORT_SHA}"
-          TITLE="RVX Morphed Evergreen ${VERSION} (${SHORT_SHA})"
+          TAG="v${VERSION}"
+          TITLE="${VERSION}"
+          BUNDLE_FILE="patches/build/libs/patches-${VERSION}.mpp"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           echo "title=${TITLE}" >> "$GITHUB_OUTPUT"
+          echo "bundle_file=${BUNDLE_FILE}" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -53,8 +53,9 @@ jobs:
           tag_name: ${{ steps.meta.outputs.tag }}
           name: ${{ steps.meta.outputs.title }}
           generate_release_notes: true
+          overwrite_files: true
           files: |
-            patches/build/libs/*.mpp
+            ${{ steps.meta.outputs.bundle_file }}
             patches-list.json
             patches-bundle.json
             README.md
