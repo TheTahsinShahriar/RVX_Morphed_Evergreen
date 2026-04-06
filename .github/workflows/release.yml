@@ -40,7 +40,7 @@ jobs:
         run: |
           VERSION="$(grep '^version *= *' gradle.properties | head -n1 | cut -d= -f2 | tr -d '[:space:]')"
           TAG="v${VERSION}"
-          TITLE="${VERSION}"
+          TITLE="${TAG}"
           BUNDLE_FILE="patches/build/libs/patches-${VERSION}.mpp"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
@@ -56,6 +56,3 @@ jobs:
           overwrite_files: true
           files: |
             ${{ steps.meta.outputs.bundle_file }}
-            patches-list.json
-            patches-bundle.json
-            README.md
