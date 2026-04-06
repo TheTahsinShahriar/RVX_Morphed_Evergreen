@@ -1,3 +1,11 @@
+# 1.0.0 (2026-04-06)
+
+
+### Features
+
+* add GitHub Actions workflows for MPP building and automated releases ([1746974](https://github.com/TheTahsinShahriar/RVX_Morphed_Evergreen/commit/174697432e371dabe421241853f8a1b94a68d855))
+* add README template for RVX Morphed Evergreen documentation ([6b530c7](https://github.com/TheTahsinShahriar/RVX_Morphed_Evergreen/commit/6b530c721e7c0d65c6f1d072ccd8fb439990d87d))
+
 ## [5.16.4](https://github.com/wchill/rvx-morphed/compare/v5.16.3...v5.16.4) (2026-03-05)
 
 
